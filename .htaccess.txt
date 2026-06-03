@@ -1,0 +1,16 @@
+Options -Indexes
+RewriteEngine On
+
+# Protect includes directory
+RewriteRule ^includes/ - [F,L]
+
+# Protect uploads from direct PHP execution
+<FilesMatch "\.(php|phtml|php3|php4|php5|inc)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# Pretty URLs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?page=$1 [QSA,L]
